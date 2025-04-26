@@ -6,17 +6,8 @@ class PDFToText:
         self.pdf_file = pdf_file
         self.text = ""
 
-    def extract_text(self, pdf_file):
-        """
-        Extracts text from all pages of a PDF file.
-
-        Args:
-            pdf_file (str): The path to the PDF file.
-
-        Returns:
-            str: The extracted text from all pages.
-        """
-        doc = fitz.open(pdf_file)
+    def extract_text(self) -> str:
+        doc = fitz.open(self.pdf_file)
 
         for page_num in range(doc.page_count):
             page = doc.load_page(page_num)
