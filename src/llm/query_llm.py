@@ -1,31 +1,28 @@
-import requests
 import os, sys
-
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
-from utils.read_config_file import read_config_file
+from src.llm.ollama_client import OllamaLLM, InputData
 
+class QueryLLM:
+    def __init__(self, model: str, temperature: float = 0.7):
+        self.model = model
+        self.temperature = temperature
 
-def query_llm(prompt: str, model: str, temperature: float, config_file: str = "ollama_config.yaml") -> str:
-    try:
-        config = read_config_file(file_path=config_file)
-        model, url = config.get("model"), config.get("url")
-
-        if not model:
-            raise ValueError("Model name not found in configuration file.")
-        if not url:
-            raise ValueError("API url not found in configuration file.")
-
-        response = requests.post(
-            url=url,
-            json={
-                "model": model,
-                "content": prompt,
-                "temperature": temperature
-            }
+    def query(self, prompt: str) -> str:
+        input_data = InputData(
+            model=self.model,
+            content=prompt,
+            temperature=self.temperature
         )
-        response.raise_for_status()
-        
-        return response.text
-    except Exception as e:
-        print(f"Error querying LLM: {e}")
-        return ""
+        llm = OllamaLLM(input_data=input_data)
+        prediction = llm.predict()
+        return prediction["content"]
+
+
+# Example usage:
+if __name__ == "__main__":
+    llm = QueryLLM(
+        model="gemma3:12b",
+        temperature=0.7
+    )
+    prompt="Hello"
+    print(llm.query(prompt=prompt))
