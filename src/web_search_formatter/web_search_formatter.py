@@ -1,4 +1,5 @@
 import os, sys
+import json
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 from src.llm.query_llm import QueryLLM
@@ -28,20 +29,9 @@ class WebSearchFormatter:
         )
         if response is None:
             raise ValueError("LLM returned no response.")
-        return response
-    
-if __name__ == "__main__":
-    from src.text_extraction.pdf_to_text_classic import PDFToText
 
-    pdf_file = "/home/balk/Downloads/gen_med_rep_sample.pdf"
-
-    parser = PDFToText(
-        pdf_file=pdf_file
-    )
-    text = parser.extract_text()
-
-    formatter = WebSearchFormatter()
-    result = formatter.parse_disease(text)
-
-    print(result)
-    print(type(result))
+        try:
+            json_response = json.loads(response)
+            return json_response
+        except json.JSONDecodeError as e:
+            raise ValueError(f"Failed to parse LLM response as JSON: {e}")
