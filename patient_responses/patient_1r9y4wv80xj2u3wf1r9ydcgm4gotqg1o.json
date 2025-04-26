@@ -1,0 +1,10 @@
+{
+    "response_id": "1r9y4wv80xj2u3wf1r9ydcgm4gotqg1o",
+    "submission_time": "2025-04-26 20:40:36",
+    "answers": {
+        "How are you feeling today?": "good",
+        "Do you have a fever?": false,
+        "On a scale of 1-10, how is your pain level?": 5,
+        "Which symptoms are you experiencing?": "{'ids': ['BD9PsdjZRzrA'], 'refs': ['01JSSX8R860AH2RY46SYYKKMQ2'], 'labels': ['Shortness of breath']}"
+    }
+}

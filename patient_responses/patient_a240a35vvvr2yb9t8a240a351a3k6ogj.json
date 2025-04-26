@@ -1,0 +1,10 @@
+{
+    "response_id": "a240a35vvvr2yb9t8a240a351a3k6ogj",
+    "submission_time": "2025-04-26 20:51:45",
+    "answers": {
+        "How are you feeling today?": "good",
+        "Do you have a fever?": false,
+        "On a scale of 1-10, how is your pain level?": 5,
+        "Which symptoms are you experiencing?": "{'ids': ['UIKBBSyEdtaa'], 'refs': ['01JSSXWB53YZVMZKHF2YZK7QM2'], 'labels': ['Fatigue']}"
+    }
+}

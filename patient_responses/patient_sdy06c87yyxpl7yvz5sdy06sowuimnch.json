@@ -1,0 +1,10 @@
+{
+    "response_id": "sdy06c87yyxpl7yvz5sdy06sowuimnch",
+    "submission_time": "2025-04-26 20:19:20",
+    "answers": {
+        "How are you feeling today?": "good",
+        "Do you have a fever?": false,
+        "On a scale of 1-10, how is your pain level?": 5,
+        "Which symptoms are you experiencing?": "{'ids': ['pRiAQffQTpog'], 'refs': ['01JSSW1QWD275YDV21KRK0ESR5'], 'labels': ['Nausea']}"
+    }
+}
