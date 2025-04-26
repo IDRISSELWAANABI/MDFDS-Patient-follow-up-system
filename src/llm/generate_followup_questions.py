@@ -1,7 +1,8 @@
-from src.llm.ollama_client import OllamaLLM, InputData
-import os
+import os, sys
 from typing import List, Dict
 
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+from src.llm.ollama_client import OllamaLLM, InputData
 
 def build_followup_prompt(extracted_data: Dict, websearch_results: List[str]) -> str:
     patient_summary = f"""
@@ -37,7 +38,7 @@ Générez la liste maintenant :
     return prompt
 
 
-def generate_questions(prompt: str, model_name: str = "gemma:3b", temperature: float = 0.7) -> str:
+def generate_questions(prompt: str, model_name: str = "gemma3:12b", temperature: float = 0.7) -> str:
     input_data = InputData(
         model=model_name,
         content=prompt,

@@ -24,11 +24,3 @@ class PDFToText:
 
         doc.close()
         return self.text
-    
-
-
-if __name__ == "__main__":
-    pdf_file = "/home/balk/Downloads/MDFDS.pdf"
-    pdf_to_text = PDFToText(pdf_file)
-    extracted_text = pdf_to_text.extract_text(pdf_file)
-    print(extracted_text)

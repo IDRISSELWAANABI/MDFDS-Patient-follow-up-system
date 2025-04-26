@@ -1,2 +1,3 @@
-model: "mistral"
+model: "gemma3:12b"
 url: "http://localhost:8000/predict/"
+temperature: 0.7
