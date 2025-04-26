@@ -18,35 +18,43 @@ Traitement actuel: {extracted_data.get('treatment_plan', 'Non spécifié')}
         medical_updates = "\n".join([f"- {article}" for article in websearch_results])
 
         prompt = f"""
-Vous êtes une intelligence artificielle d'assistance médicale spécialisée dans la création de questions de suivi pour les patients.
+# Objectif :
+Générer des questions de suivi médicales pour un patient, au format JSON strict.
 
-Voici les données du patient:
+# Données du patient :
 {patient_summary}
 
-Voici les dernières informations médicales pertinentes:
+# Informations médicales récentes :
 {medical_updates}
 
-Tâche:
-- Analyser et comprendre les priorités de suivi pour ce patient.
-- Générer 5 à 7 questions de suivi sous forme JSON.
+# Règles :
+- Générer entre 5 et 7 questions de suivi personnalisées.
 - Diversifier les types de questions : short_text, yes_no, number, multiple_choice.
-- Respecter ce format JSON strict sans aucune explication :
+- Respecter exactement ce format pour chaque question :
+  - Pour "short_text", "yes_no" et "number" :
+    {{"type":"short_text","title":"..."}} (ou autre type)
+  - Pour "multiple_choice" :
+    {{"type":"multiple_choice","title":"...","properties":{{"choices":[{{"label":"..."}},{{"label":"..."}}],"allow_multiple_selection":true}}}}
+- Écrire toutes les questions dans une seule **liste JSON** strictement au format suivant :  
+  [
+    {{"type":"short_text","title":"..."}},
+    {{"type":"yes_no","title":"..."}},
+    ...
+  ]
+- Aucune explication, aucun texte supplémentaire, aucun retour à la ligne.
+- La sortie doit être une **seule ligne JSON** valide commençant par [ et terminant par ].
+- Pas de préfixe (ex: "json"), pas de balises ```json, ni d’introduction ou de commentaires.
 
-[
-    {{"type": "short_text", "title": "..." }},
-    {{"type": "yes_no", "title": "..." }},
-    {{"type": "number", "title": "..." }},
-    {{"type": "multiple_choice", "title": "...", "properties": {{"choices": [{{"label": "..."}}, {{"label": "..."}}], "allow_multiple_selection": true}}}}
-]
-
-Directives spécifiques:
-- Les questions doivent être en français naturel et adapté à un patient non expert.
-- Utiliser des formulations variées : "Avez-vous constaté...", "Ressentez-vous...", "Avez-vous eu des difficultés avec...", etc.
-- Adopter un ton bienveillant et engageant.
+# Consignes linguistiques :
+- Formuler les questions en français naturel, clair, bienveillant et accessible au grand public.
+- Varier les formulations : "Avez-vous constaté...", "Ressentez-vous...", "Avez-vous eu des difficultés avec...", etc.
 - Éviter tout jargon médical technique.
-- NE PAS fournir de résumé, ni expliquer les questions : donner directement la liste JSON valide.
 
-Générez maintenant :
+# Exemple de sortie correcte :
+[{{"type":"short_text","title":"Comment vous sentez-vous aujourd'hui?"}},{{"type":"yes_no","title":"Avez-vous ressenti de la douleur récemment?"}},{{"type":"number","title":"Combien de fois par jour prenez-vous votre traitement?"}},{{"type":"multiple_choice","title":"Quel symptôme avez-vous ressenti?", "properties":{{"choices":[{{"label":"Fatigue"}},{{"label":"Douleur"}},{{"label":"Essoufflement"}}],"allow_multiple_selection":true}}}}]
+
+# Tâche :
+Analyser les données ci-dessus et générer les questions de suivi au bon format.
 """
         return prompt
 
