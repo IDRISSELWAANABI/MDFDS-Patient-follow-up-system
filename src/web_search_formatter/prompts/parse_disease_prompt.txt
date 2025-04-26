@@ -1,0 +1,21 @@
+# Goal:  
+Extract the main disease information from the provided raw text medical report.  
+Format the output as a strict JSON object with the following keys:  
+- `"disease"` (string, required) — includes the disease name, type, and any important medical classification information that would help a web search.  
+
+# Rules:  
+- Focus only on identifying the main disease mentioned in the report.  
+- Include disease type if available (e.g., "Type 2 Diabetes", "Stage 3 Lung Cancer").  
+- If multiple diseases are mentioned, choose the most critical one based on severity or prominence.  
+- If no disease is found, output `"disease": "Unknown"`.  
+- Do not include symptoms, treatments, or unrelated information.  
+- Keep the `"disease"` field as detailed and medically accurate as possible to improve search results.  
+
+# Output Format:  
+Always respond with ONLY a valid JSON object and nothing else.  
+DO NOT wrap the JSON with triple backticks (` ```json ` or ` ``` `) or single backticks (`).  
+The output must begin and end with curly braces `{{}}`.  
+
+# Your Task:  
+Analyze and extract the disease information from the following raw medical report:  
+{}
