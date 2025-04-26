@@ -6,16 +6,18 @@ import json
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 from src.llm.ollama_client import OllamaLLM, InputData
 
-def build_followup_prompt(extracted_data: Dict, websearch_results: List[str]) -> str:
-    patient_summary = f"""
+class FollowupPromptBuilder:
+    @staticmethod
+    def build(extracted_data: Dict, websearch_results: List[str]) -> str:
+        patient_summary = f"""
 Nom: {extracted_data.get('patient_name', 'Non spécifié')}
 Diagnostic principal: {extracted_data.get('diagnosis', 'Non spécifié')}
 Symptômes actuels: {', '.join(extracted_data.get('symptoms', []))}
 Traitement actuel: {extracted_data.get('treatment_plan', 'Non spécifié')}
 """
-    medical_updates = "\n".join([f"- {article}" for article in websearch_results])
+        medical_updates = "\n".join([f"- {article}" for article in websearch_results])
 
-    prompt = f"""
+        prompt = f"""
 Vous êtes une intelligence artificielle d'assistance médicale spécialisée dans la création de questions de suivi pour les patients.
 
 Voici les données du patient:
@@ -31,9 +33,9 @@ Tâche:
 - Respecter ce format JSON strict sans aucune explication :
 
 [
-    {{"type": "short_text", "title": "..."}},
-    {{"type": "yes_no", "title": "..."}},
-    {{"type": "number", "title": "..."}},
+    {{"type": "short_text", "title": "..." }},
+    {{"type": "yes_no", "title": "..." }},
+    {{"type": "number", "title": "..." }},
     {{"type": "multiple_choice", "title": "...", "properties": {{"choices": [{{"label": "..."}}, {{"label": "..."}}], "allow_multiple_selection": true}}}}
 ]
 
@@ -46,40 +48,47 @@ Directives spécifiques:
 
 Générez maintenant :
 """
-    return prompt
+        return prompt
 
 
-def generate_questions(prompt: str, model_name: str = "gemma3:12b", temperature: float = 0.7) -> List[Dict[str, Any]]:
-    input_data = InputData(
-        model=model_name,
-        content=prompt,
-        temperature=temperature
-    )
-    llm = OllamaLLM(input_data=input_data)
-    prediction = llm.predict()
 
-    try:
-        questions = json.loads(prediction.get("content", ""))
-        if not isinstance(questions, list):
-            raise ValueError("Invalid output structure: Expected a list.")
-        return questions
-    except Exception as e:
-        print(f"\n❌ Error parsing LLM output: {e}\nRaw output:\n{prediction.get('content', '')}")
-        return []
+class FollowupQuestionGenerator:
+    def __init__(self, model_name: str = "gemma3:12b", temperature: float = 0.7):
+        self.model_name = model_name
+        self.temperature = temperature
+
+    def generate(self, prompt: str) -> List[Dict[str, Any]]:
+        input_data = InputData(
+            model=self.model_name,
+            content=prompt,
+            temperature=self.temperature
+        )
+        llm = OllamaLLM(input_data=input_data)
+        prediction = llm.predict()
+
+        try:
+            questions = json.loads(prediction.get("content", ""))
+            if not isinstance(questions, list):
+                raise ValueError("Invalid output structure: Expected a list.")
+            return questions
+        except Exception as e:
+            print(f"Error parsing LLM output: {e}\nRaw output:\n{prediction.get('content', '')}")
+            return []
     
 
 
-def save_questions(questions: List[Dict[str, Any]], filename: str = "patient_questions.json") -> None:
-    os.makedirs("outputs", exist_ok=True)
-    filepath = os.path.join("outputs", filename)
-    with open(filepath, "w", encoding="utf-8") as f:
-        json.dump(questions, f, ensure_ascii=False, indent=4)
-    print(f"\n✅ Questions saved at: {filepath}")
+class FollowupQuestionSaver:
+    @staticmethod
+    def save(questions: List[Dict[str, Any]], filename: str = "patient_questions.json") -> None:
+        os.makedirs("outputs", exist_ok=True)
+        filepath = os.path.join("outputs", filename)
+        with open(filepath, "w", encoding="utf-8") as f:
+            json.dump(questions, f, ensure_ascii=False, indent=4)
+        print(f"Questions saved at: {filepath}")
 
 
 
 def main():
-    # TODO: Replace with real extracted inputs
     extracted_data = {
         "patient_name": "Ahmed B.",
         "diagnosis": "Type 2 Diabetes",
@@ -93,16 +102,17 @@ def main():
         "Regular physical activity is crucial for blood sugar control. Missing medication doses can lead to serious complications like ketoacidosis."
     ]
 
-    prompt = build_followup_prompt(extracted_data, websearch_results)
-    questions = generate_questions(prompt)
+    prompt = FollowupPromptBuilder.build(extracted_data, websearch_results)
+    generator = FollowupQuestionGenerator()
+    questions = generator.generate(prompt)
 
     if questions:
-        print("\n✅ Questions prêtes au format Typeform:\n")
-        for q in questions:
-            print(q)
-        save_questions(questions)
+        print("\nQuestions generated:\n")
+        for question in questions:
+            print(question)
+        FollowupQuestionSaver.save(questions)
     else:
-        print("\n⚠️ Aucune question générée.")
+        print("No questions generated.")
 
 
 if __name__ == "__main__":
