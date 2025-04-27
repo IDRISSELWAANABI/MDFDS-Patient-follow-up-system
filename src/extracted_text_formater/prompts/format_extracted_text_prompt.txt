@@ -1,0 +1,31 @@
+# Goal:  
+Extract structured patient information from the provided extracted text of a medical report.
+
+Format the output strictly as a single-line JSON object with these exact keys:  
+- `"patient_name"` (string, required) — the name of the patient as clearly mentioned.  
+- `"diagnosis"` (string, required) — the primary medical diagnosis, standardized for medical accuracy and web search.  
+- `"symptoms"` (list of strings, required) — a list of the patient's main reported symptoms.  
+- `"treatment_plan"` (string, required) — a brief description of the prescribed treatment or plan.
+
+# Rules:  
+- Extract exactly and only the patient name, diagnosis, symptoms, and treatment plan from the text.  
+- If a field is not mentioned explicitly, use:
+  - For `"patient_name"`: `"Unknown"`
+  - For `"diagnosis"`: `"Unknown"`
+  - For `"symptoms"`: an empty list `[]`
+  - For `"treatment_plan"`: `"Unknown"`
+- For `"symptoms"`, list individual symptoms as short strings; do not combine them into one long sentence.
+- Do not invent or assume information based on context unless clearly stated.
+- Always make the disease/diagnosis medically precise and suitable for search engines (e.g., "Type 1 Diabetes Mellitus", not just "diabetes").
+- Your JSON must have no extra spaces, no line breaks, and no commentary.
+- Always output exactly one JSON object in a single line starting with {{ and ending with }}.
+
+# Output Format:  
+- Only output a valid JSON object, nothing else.  
+- Do not wrap the JSON with triple backticks (```json) or single backticks (`).  
+- Example of correct output:
+{{"patient_name":"Ahmed B.","diagnosis":"Type 2 Diabetes","symptoms":["fatigue","excessive thirst","frequent urination"],"treatment_plan":"Metformin 500mg twice daily; follow low-sugar diet."}}
+
+# Your Task:  
+Analyze and extract the requested structured data from the following extracted text:  
+{}

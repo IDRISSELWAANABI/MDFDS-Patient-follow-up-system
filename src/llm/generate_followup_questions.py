@@ -34,10 +34,10 @@ Générer des questions de suivi médicales pour un patient, au format JSON stri
   - "ref" : identifiant unique et court en snake_case (ex: "suivi_fatigue", "suivi_glycemie")
   - "title" : texte de la question (formulé pour un patient)
   - "type" : type de question ("short_text", "long_text", "number", "multiple_choice", "yes_no", "rating", "opinion_scale", "date", "email", "phone_number", "dropdown")
-  - "validations" : dictionnaire des règles de validation (ex: {"required": true})
+  - "validations" : dictionnaire des règles de validation (ex: {{"required": true}})
 
 - Si le type est "multiple_choice", ajouter une clé "properties" avec :
-  - "choices" : une liste d'objets {"label": "texte choix"}.
+  - "choices" : une liste d'objets {{"label": "texte choix"}}.
 
 - Exemple de bonne structure pour une question :
   {{

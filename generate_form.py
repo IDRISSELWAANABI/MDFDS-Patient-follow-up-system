@@ -12,9 +12,10 @@ class PatientFormSystem:
         """Initialize the PatientFormSystem with API keys and settings"""
         # Load environment variables
         load_dotenv()
-        self.SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
-        self.TYPEFORM_API_KEY = os.getenv('TYPEFORM_API_KEY')
-        
+        # self.SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
+        # self.TYPEFORM_API_KEY = os.getenv('TYPEFORM_API_KEY')
+        self.SENDGRID_API_KEY = "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"
+        self.TYPEFORM_API_KEY = "tfp_1KA3bCkCw33ZtQkq6NjVLv73yK2PSgDu1FBf6Bk8srQ_3ssoYgYU3Burqm"
         # Email settings
         self.FROM_EMAIL = 'technobadr2003@gmail.com'
         self.TO_EMAIL = 'drisselwaanabi02@gmail.com'
@@ -96,6 +97,7 @@ class PatientFormSystem:
         )
         
         data = response.json()
+        print(data)
         self.form_url = data['_links']['display']
         self.form_id = data['id']
         
