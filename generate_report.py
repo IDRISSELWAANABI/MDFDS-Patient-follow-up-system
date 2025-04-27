@@ -2,7 +2,7 @@ import ollama
 import json
 
 class PatientReportGenerator:
-    def __init__(self, model_name="gemma3"):
+    def __init__(self, model_name="gemma3:12b"):
         """
         Initialize the PatientReportGenerator with the specified LLM model.
         

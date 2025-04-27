@@ -1,0 +1,13 @@
+{
+    "response_id": "2yle9dij44wxnfw35rvl512yle9dic0a",
+    "submission_time": "2025-04-27 01:41:19",
+    "answers": {
+        "Comment vous sentez-vous concernant votre respiration ? Est-ce que vous avez encore des difficult\u00e9s \u00e0 respirer ?": "oui",
+        "Ressentez-vous toujours des douleurs dans la poitrine ? Si oui, comment les d\u00e9cririez-vous ?": "ca va",
+        "Avez-vous surveill\u00e9 votre taux de glyc\u00e9mie ? Si oui, quels ont \u00e9t\u00e9 les r\u00e9sultats ?": 5,
+        "Avez-vous eu des difficult\u00e9s \u00e0 prendre vos diur\u00e9tiques (Furosemide) ?": true,
+        "Comment se passe votre alimentation ? Avez-vous pu suivre un r\u00e9gime adapt\u00e9 ?": "h",
+        "Avez-vous des questions concernant votre \u00e9tat de sant\u00e9 ou votre traitement ?": false,
+        "Comment se passe votre suivi avec le cardiologue ?": "5"
+    }
+}

@@ -4,6 +4,8 @@ from web_search import DiseaseInformation
 from src.extracted_text_formater.extracted_text_formater import ExtractedTextFormatter
 from src.llm.generate_followup_questions import FollowupPromptBuilder, FollowupQuestionGenerator
 from generate_form import PatientFormSystem
+from generate_report import PatientReportGenerator
+import time
 
 pdf_file = "/home/balk/Downloads/gen_med_rep_sample.pdf"
 
@@ -37,14 +39,24 @@ prompt = FollowupPromptBuilder.build(
 generator = FollowupQuestionGenerator()
 questions = generator.generate(prompt)
 
-print(questions)
-# print(type(questions))
-# print(type(questions[0]))
-
 pfs = PatientFormSystem()    
 pfs.set_questions(questions)
     
 if pfs.initialize():
-    pfs.start_monitoring(check_interval=30)
+    while True:
+        print("\nChecking for new form submissions...")
+        results_list = pfs.check_for_new_responses()
+        if results_list:
+            for result_list in results_list:
+                generate_rep = PatientReportGenerator()
+                report = generate_rep.generate_report(
+                    patient_form_data=result_list,
+                    disease_search_results=contents
+                )
+                with open(f"./report/{pfs.form_id}.txt", 'w') as file:
+                    file.write(report)
+        else:
+            time.sleep(30)
+            continue
 else:
     print("Failed to initialize patient form system.")
