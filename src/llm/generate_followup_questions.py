@@ -30,20 +30,36 @@ Générer des questions de suivi médicales pour un patient, au format JSON stri
 # Règles :
 - Générer entre 5 et 7 questions de suivi personnalisées.
 - Diversifier les types de questions : short_text, yes_no, number, multiple_choice.
-- Respecter exactement ce format pour chaque question :
-  - Pour "short_text", "yes_no" et "number" :
-    {{"type":"short_text","title":"..."}} (ou autre type)
-  - Pour "multiple_choice" :
-    {{"type":"multiple_choice","title":"...","properties":{{"choices":[{{"label":"..."}},{{"label":"..."}}],"allow_multiple_selection":true}}}}
-- Écrire toutes les questions dans une seule **liste JSON** strictement au format suivant :  
-  [
-    {{"type":"short_text","title":"..."}},
-    {{"type":"yes_no","title":"..."}},
-    ...
-  ]
-- Aucune explication, aucun texte supplémentaire, aucun retour à la ligne.
-- La sortie doit être une **seule ligne JSON** valide commençant par [ et terminant par ].
-- Pas de préfixe (ex: "json"), pas de balises ```json, ni d’introduction ou de commentaires.
+- Chaque question doit être un objet avec exactement les clés suivantes :
+  - "ref" : identifiant unique et court en snake_case (ex: "suivi_fatigue", "suivi_glycemie")
+  - "title" : texte de la question (formulé pour un patient)
+  - "type" : type de question ("short_text", "long_text", "number", "multiple_choice", "yes_no", "rating", "opinion_scale", "date", "email", "phone_number", "dropdown")
+  - "validations" : dictionnaire des règles de validation (ex: {"required": true})
+
+- Si le type est "multiple_choice", ajouter une clé "properties" avec :
+  - "choices" : une liste d'objets {"label": "texte choix"}.
+
+- Exemple de bonne structure pour une question :
+  {{
+    "ref": "suivi_douleur",
+    "title": "Ressentez-vous encore des douleurs ?",
+    "type": "yes_no",
+    "validations": {{"required": true}}
+  }}
+  ou pour une question multiple_choice :
+  {{
+    "ref": "suivi_symptomes",
+    "title": "Quels symptômes avez-vous ressentis ?",
+    "type": "multiple_choice",
+    "validations": {{"required": true}},
+    "properties": {{"choices": [{{"label": "Fatigue"}}, {{"label": "Douleur"}}, {{"label": "Essoufflement"}}]}}
+  }}
+
+# Contraintes sur la sortie :
+- Sortie = **une seule ligne JSON** commençant par [ et finissant par ].
+- Ne pas ajouter de balises ("```json") ni d'introduction ("json", "réponse:", etc.).
+- Aucune explication, seulement la liste JSON.
+- Aucun retour à la ligne.
 
 # Consignes linguistiques :
 - Formuler les questions en français naturel, clair, bienveillant et accessible au grand public.
