@@ -15,10 +15,10 @@ class PatientFormSystem:
         # self.SENDGRID_API_KEY = "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"
         # self.TYPEFORM_API_KEY = 'tfp_1KA3bCkCw33ZtQkq6NjVLv73yK2PSgDu1FBf6Bk8srQ_3ssoYgYU3Burqm'
         self.SENDGRID_API_KEY = "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"
-        self.TYPEFORM_API_KEY = "tfp_Fw52Kx3yXHrzf8DQjGn4XAfzD92hgDhZmxBk8Sx72Lvy_3ssnYb5KiAz6q9"
+        self.TYPEFORM_API_KEY = "tfp_2a6h5U6F42fvmW5A84G2YD2kKggtUvESmRWVNtmrza9u_3pYMtD7KMHWAZg"
         # Email settings
         self.FROM_EMAIL = 'technobadr2003@gmail.com'
-        self.TO_EMAIL = 'drisselwaanabi02@gmail.com'
+        self.TO_EMAIL = 'technobadr2003@gmail.com'
         
         # Directory for storing patient responses
         self.DATA_DIR = data_dir
