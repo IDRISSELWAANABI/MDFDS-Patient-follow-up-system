@@ -51,8 +51,12 @@ cd MDFDS-Patient-follow-up-system
 ```bash
 chmod +x ./orchestrator.sh
 ```
+### 3. Install ollama and run
+```bash
+ollama run gemma3:12b
+```
 
-### 3. Run the automation script
+### 4. Run the automation script
 
 ```bash
 ./orchestrator.sh
@@ -65,9 +69,6 @@ The `orchestrator.sh` script will handle:
 - Setting up the frontend application
 - Running both services
 
-> **Note:** Make sure you have Ollama installed and run:
-```bash
-ollama run gemma3:12b
-```
+> **Note:** Make sure you have filled in the config/.env file.
 
 ---
