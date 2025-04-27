@@ -12,8 +12,8 @@ class PatientFormSystem:
         """Initialize the PatientFormSystem with API keys and settings"""
         # Load environment variables
         load_dotenv()
-        # self.SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
-        # self.TYPEFORM_API_KEY = os.getenv('TYPEFORM_API_KEY')
+        # self.SENDGRID_API_KEY = "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"
+        # self.TYPEFORM_API_KEY = 'tfp_1KA3bCkCw33ZtQkq6NjVLv73yK2PSgDu1FBf6Bk8srQ_3ssoYgYU3Burqm'
         self.SENDGRID_API_KEY = "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"
         self.TYPEFORM_API_KEY = "tfp_1KA3bCkCw33ZtQkq6NjVLv73yK2PSgDu1FBf6Bk8srQ_3ssoYgYU3Burqm"
         # Email settings
@@ -97,7 +97,6 @@ class PatientFormSystem:
         )
         
         data = response.json()
-        print(data)
         self.form_url = data['_links']['display']
         self.form_id = data['id']
         
@@ -280,3 +279,58 @@ class PatientFormSystem:
             print("Failed to send email with form URL")
         
         return True
+    
+
+# def main():
+#     # Initialize the patient form system
+#     pfs = PatientFormSystem()
+    
+#     # Define the questions for the form
+#     questions = [
+#         {
+#             "ref": "name",
+#             "title": "What is your full name?",
+#             "type": "short_text",
+#             "validations": {"required": True}
+#         },
+#         {
+#             "ref": "age",
+#             "title": "What is your age?",
+#             "type": "number",
+#             "validations": {"required": True}
+#         },
+#         {
+#             "ref": "symptoms",
+#             "title": "What symptoms are you experiencing?",
+#             "type": "long_text",
+#             "validations": {"required": True}
+#         },
+#         {
+#             "ref": "pain_level",
+#             "title": "On a scale of 1-10, how would you rate your pain?",
+#             "type": "number",
+#             "validations": {
+#                 "required": True,
+#                 "min_value": 1,
+#                 "max_value": 10
+#             }
+#         },
+#         {
+#             "ref": "medical_history",
+#             "title": "Please describe any relevant medical history.",
+#             "type": "long_text"
+#         }
+#     ]
+    
+#     # Set the questions
+#     pfs.set_questions(questions)
+    
+#     # Initialize the system (creates the form and sends email)
+#     if pfs.initialize():
+#         # Start monitoring for responses
+#         pfs.start_monitoring(check_interval=30)
+#     else:
+#         print("Failed to initialize patient form system.")
+
+# if __name__ == "__main__":
+#     main()
