@@ -1,0 +1,13 @@
+{
+    "response_id": "lztf9u7b2wzds6048lztf971rnb8a247",
+    "submission_time": "2025-04-27 03:04:36",
+    "answers": {
+        "Avez-vous encore des difficult\u00e9s \u00e0 respirer ?": false,
+        "Ressentez-vous toujours des douleurs dans la poitrine ?": false,
+        "Avez-vous eu des difficult\u00e9s \u00e0 prendre vos m\u00e9dicaments selon la prescription ?": "gg",
+        "Si vous surveillez votre glyc\u00e9mie, quel est votre dernier taux ?": 5,
+        "Avez-vous suivi les conseils d'alimentation qui vous ont \u00e9t\u00e9 donn\u00e9s ?": false,
+        "Avez-vous pu faire un peu d'activit\u00e9 physique depuis votre sortie de l'h\u00f4pital ?": "jj",
+        "Quels conseils concernant votre mode de vie vous semblent les plus importants \u00e0 suivre ?": "Activit\u00e9 physique r\u00e9guli\u00e8re"
+    }
+}

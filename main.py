@@ -53,7 +53,7 @@ if pfs.initialize():
                     patient_form_data=result_list,
                     disease_search_results=contents
                 )
-                with open(f"./report/{pfs.form_id}.txt", 'w') as file:
+                with open(f"./database/reports/uuid_{pfs.form_id}.txt", 'w') as file:
                     file.write(report)
         else:
             time.sleep(30)
